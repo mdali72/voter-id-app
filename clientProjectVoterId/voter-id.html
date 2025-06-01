@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter ID Card</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            padding: 20px 0;
+        }
+        
+        .voter-card {
+            width: 400px;
+            height: 250px;
+            background-image: url('frontCard.png');
+            /* background-position: 100%, 100%; */
+            background-size: 100%, 100%;
+            background-repeat: no-repeat;
+            /* background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); */
+            border-radius: 15px;
+            position: relative;
+            margin: 20px auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 2px solid #fff;
+        }
+        
+        .card-header {
+            /* background: rgba(255,255,255,0.9); */
+            padding: 8px 15px;
+            text-align: center;
+            /* border-bottom: 1px solid #ddd; */
+        }
+        
+        
+        
+        .header-text {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .header-text h6 {
+            margin: 0;
+            font-size: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .header-text p {
+            margin: 0;
+            font-size: 8px;
+            color: #666;
+        }
+        
+        .card-body {
+            padding: 15px;
+            position: relative;
+            height: calc(100% - 60px);
+        }
+        
+        .voter-number {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .photo-section {
+            width: 100px;
+            height: 128px;
+            /* border: 2px solid #333; */
+            background: #f0f0f0;
+            float: left;
+            margin-right: 15px;
+            margin-top: 24px;
+
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .photo-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .details-section {
+            font-size: 10px;
+            line-height: 1.3;
+            color: #333;
+        }
+        
+        .detail-row {
+            margin-bottom: 3px;
+        }
+        
+        .label {
+            font-weight: bold;
+        }
+        
+        .hologram {
+            position: absolute;
+            right: 10px;
+            top: 50px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff, #ffff00);
+            border-radius: 10px;
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .security-pattern {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.1),
+                rgba(255,255,255,0.1) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+        }
+        
+        .back-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 15px;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+        
+        .qr-code {
+            width: 80px;
+            height: 80px;
+            background: #333;
+            float: right;
+            margin-left: 15px;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .qr-pattern {
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, #fff, #fff 2px, #333 2px, #333 4px),
+                repeating-linear-gradient(90deg, #fff, #fff 2px, #333 2px, #333 4px);
+            opacity: 0.8;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .btn-custom {
+            margin: 0 10px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-print {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        @media print {
+            body { background: white; }
+            .controls { display: none; }
+            .voter-card { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 style="color: #2c3e50; font-weight: bold;">🗳️ Voter ID Card Generated</h2>
+        </div>
+        
+        <!-- Front Side -->
+        <div class="voter-card" id="frontCard">
+            <div class="card-header">
+                <!-- <div class="govt-logo"></div> -->
+                <div class="header-text">
+                    <h6>भारत निर्वाचन आयोग</h6>
+                    <h6>ELECTION COMMISSION OF INDIA</h6>
+                    <p>मतदाता फोटो पहचान पत्र - ELECTOR PHOTO IDENTITY CARD</p>
+                </div>
+                <!-- <div class="election-logo"></div> -->
+            </div>
+            
+            <div class="card-body">
+                <div class="voter-number" id="voterNumber">SUN1713783</div>
+                
+                <div class="photo-section">
+                    <img id="voterPhoto" src="/placeholder.svg?height=100&width=80" alt="Voter Photo">
+                </div>
+                
+                <div class="details-section">
+                    <div class="detail-row">
+                        <span class="label">नाम : </span><span id="nameHindi"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Name : </span><span id="nameEnglish">MOHAMMAD ALI</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">माता का नाम : </span><span id="motherNameHindi"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Mother's Name : </span><span id="motherNameEnglish">JABIR ALI</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">लिंग / Gender : </span><span id="genderHindi">पुरुष</span> / <span id="genderEnglish">Male</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">जन्म तिथि / आयु :</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Date of Birth / Age : </span><span id="dobAge">10-05-2003</span>
+                    </div>
+                </div>
+                
+                <div class="hologram">
+                    SECURE
+                </div>
+                
+                <div class="security-pattern"></div>
+            </div>
+        </div>
+        
+        <!-- Back Side -->
+        <div class="voter-card back-card" id="backCard">
+            <div class="qr-code">
+                <div class="qr-pattern"></div>
+            </div>
+            
+            <div style="margin-right: 100px;">
+                <div class="detail-row">
+                    <span class="label">पता : </span><span id="addressHindi"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Address : </span><span id="addressEnglish"></span>
+                </div>
+                <br>
+                <div class="detail-row">
+                    <span class="label">Electoral Registration Officer,</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Issue Date : </span><span id="issueDate">21-12-2022</span>
+                </div>
+                <br>
+                <div style="font-size: 8px; line-height: 1.2;">
+                    <p>1.) Before Every Election, please check that your name exists in current electoral roll.</p>
+                    <p>2.) This card is not a proof of age except for the purpose of election.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-custom btn-print" onclick="printCard()">🖨️ Print Card</button>
+            <button class="btn btn-custom btn-back" onclick="goBack()">⬅️ Back to Form</button>
+            <button class="btn btn-custom btn-back" onclick="downloadCard()">💾 Download</button>
+        </div>
+    </div>
+
+    <script>
+        // Load voter data from localStorage
+        function loadVoterData() {
+            const voterData = JSON.parse(localStorage.getItem('voterData'));
+            
+            if (!voterData) {
+                alert('No voter data found. Please fill the form first.');
+                window.location.href = 'form.html';
+                return;
+            }
+            
+            // Populate front card
+            document.getElementById('voterNumber').textContent = voterData.voterNumber;
+            document.getElementById('nameEnglish').textContent = voterData.name.toUpperCase();
+            document.getElementById('nameHindi').textContent = voterData.name; // In real app, would convert to Hindi
+            document.getElementById('motherNameEnglish').textContent = voterData.motherName.toUpperCase();
+            document.getElementById('motherNameHindi').textContent = voterData.motherName; // In real app, would convert to Hindi
+            document.getElementById('genderEnglish').textContent = voterData.gender;
+            document.getElementById('genderHindi').textContent = voterData.gender === 'Male' ? 'पुरुष' : voterData.gender === 'Female' ? 'महिला' : 'अन्य';
+            
+            // Format date
+            const dobFormatted = new Date(voterData.dob).toLocaleDateString('en-GB');
+            document.getElementById('dobAge').textContent = dobFormatted;
+            
+            // Set photo
+            if (voterData.photo) {
+                document.getElementById('voterPhoto').src = voterData.photo;
+            }
+            
+            // Populate back card
+            document.getElementById('addressEnglish').textContent = voterData.address;
+            document.getElementById('addressHindi').textContent = voterData.address; // In real app, would convert to Hindi
+            
+            // Set current date as issue date
+            document.getElementById('issueDate').textContent = new Date().toLocaleDateString('en-GB');
+        }
+        
+        function printCard() {
+            window.print();
+        }
+        
+        function goBack() {
+            window.location.href = 'form.html';
+        }
+        
+        function downloadCard() {
+            // Simple download functionality
+            const cardContent = document.documentElement.outerHTML;
+            const blob = new Blob([cardContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'voter-id-card.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Load data when page loads
+        window.onload = loadVoterData;
+    </script>
+</body>
+</html>
